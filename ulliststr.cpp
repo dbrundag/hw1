@@ -48,20 +48,6 @@ void ULListStr::push_back(const std::string& val)
 	{
 		//create new tail and add to begining on new tail
 		Item* new_tail = new Item();
-
-		// // set new tail properties
-		// new_tail->val[new_tail->last] = val;
-		// ++new_tail->last;
-		
-		// new_tail->prev = tail_;
-		// new_tail->next = NULL;
-
-		// //update linked list about new tail
-		// tail_->next = new_tail;
-		// tail_ = new_tail;
-
-
-
 		new_tail->prev = tail_;
 		tail_ = new_tail;
 	
@@ -98,14 +84,6 @@ void ULListStr::push_front(const std::string& val)
 	{
 		//create new head and add to end of new tail
 		Item* new_head = new Item;
-		// set new head properties
-		// new_head->first = ARRSIZE - 1;
-		// new_head->last = ARRSIZE;
-		// new_head->val[new_head->first] = val;
-		// new_head->prev = NULL;
-		// new_head->next = head_;
-		//update linked list about new head
-
 		new_head->next = head_;
 		head_ = new_head;
 	
@@ -115,13 +93,92 @@ void ULListStr::push_front(const std::string& val)
 		head_->first = ARRSIZE - 1;
 		head_->last = ARRSIZE;
 		head_->val[head_->first] = val;
-
-
-		// head_->prev = new_head;
-		// head_ = new_head;
 	}
 	++size_;
 }
+
+void ULListStr::pop_back(){
+	//no value has been added to list
+	if(size_ == 0)
+	{
+		return;
+	}
+	//about to remove only element in item
+	if((tail_->last - tail_->first) == 1) //math to get number of elements to account for different item starting points
+	{
+		tail_->val[tail_->last-1] = "";
+		Item* tmp = tail_;
+
+		if(head_ == tail_) //only item in list
+		{
+			head_ = tail_ = NULL;
+		}
+		else
+		{
+			tail_ = tail_->prev;
+			tail_->next = NULL;
+		}
+		delete tmp;
+		//tail is now prev item so don't need to decrement last val
+		--size_;
+		return;
+	}
+
+	//common case, removing element from item with multiple elements
+	tail_->val[tail_->last-1] = "";
+	--tail_->last;
+	--size_;
+}
+
+void ULListStr::pop_front(){
+	//no value has been added to list
+	if(size_ == 0)
+	{
+		return;
+	}
+	//about to remove only element in item
+	if((head_->last - head_->first) == 1) //math to get number of elements to account for different item starting points
+	{
+		head_->val[head_->first] = "";
+		Item* tmp = head_;
+
+		if(head_ == tail_) //only item in list
+		{
+			head_ = tail_ = NULL;
+		}
+		else
+		{
+			head_ = head_->next;
+			head_->prev = NULL;
+		}
+		delete tmp;
+		//head is now next item so don't need to increment first val
+		--size_;
+		return;
+	}
+
+	//common case, removing element from item with multiple elements
+	head_->val[head_->first] = "";
+	++head_->first;
+	--size_;
+}
+
+std::string const & ULListStr::back() const{
+	if(tail_ == NULL)
+	{
+		throw std::invalid_argument("List is empty. No front or back.");
+	}
+	return tail_->val[tail_->last-1];
+}
+
+std::string const & ULListStr::front() const{
+	if(head_ == NULL)
+	{
+		throw std::invalid_argument("List is empty. No front or back.");
+	}
+	return head_->val[head_->first];
+}
+
 
 void ULListStr::set(size_t loc, const std::string& val)
 {
@@ -151,36 +208,32 @@ std::string const & ULListStr::get(size_t loc) const
 }
 
 std::string* ULListStr::getValAtLoc(size_t loc) const{
-	// if (loc > size_){
-	// 	return NULL;
-	// }
+	if(loc > size_){
+		return NULL;
+	}
 
-	// Item* currNode = head_;
-	// int count = 0;
+	Item* currNode = head_;
+	size_t nodeIndex = currNode->first;
 
-	// for(int i=0; i<loc; i++){
-	// 	if(count > (currNode->last - currNode->first ))
-	// 	{
-	// 		currNode = currNode->next;
-	// 		count = 0;
-	// 	}
-	// 	if(i == loc){
-	// 		return currNode->val[count];
-	// 	}
-	// 	count++;
-	// }
-
-
-	// for(int i=0; i < loc; i++){
-	// 	if(localIndex  == ARRSIZE){
-	// 		localIndex = 0;
-	// 		currNode = currNode->next;
-	// 	}
-	// 	if(currNode[localIndex])
-
-	// }
-	std::string* pow = new std::string("cow");
-	return pow;
+	for(size_t i=0; i<=loc; i++)
+	{
+		if( i == loc){
+			break;
+		}
+		
+		if (currNode->next == NULL){
+			++nodeIndex;
+			continue;
+		}
+		if(nodeIndex == currNode->last -1)
+		{
+			currNode = currNode->next;
+			nodeIndex = currNode->first;
+			continue;
+		}
+		++nodeIndex;
+	}
+	return currNode->val + nodeIndex;
 }
 
 void ULListStr::clear()

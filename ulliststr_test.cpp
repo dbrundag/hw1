@@ -111,59 +111,7 @@ int main(int argc, char* argv[])
 	dat.push_front(str2);
 	std::cout << "Back should be 'one'. Front is " << dat.back() << std::endl;
 
-
-
-
-	// //when ULListStr head is NULL
-	// dat.push_front(str1);
-	// //when at least one element is in head
-	// dat.push_front(str2);
-	// //when needs to create new item to expand right
-	// dat.clear();
-	// for(int i=0; i < ARRSIZE; i++){
-	// 	dat.push_back(str3);
-	// }
-	// dat.push_back(str4);
-
-	
-
-	// std::cout << dat.front() << std::endl;
-	// std::cout << dat.back() << std::endl;
-	// std::cout << dat.get(2)  << std::endl;
-	// // << " " << dat.get(1) << " " << dat.get(2) <<
-	// dat.pop_front();
-	// dat.pop_front();
-	// dat.pop_front();
-
-	// dat.pop_back();
-	// dat.pop_back();
-	// dat.pop_back();
-	// std::cout << dat.back() << std::endl;
-
-	// dat.push_back(str1);
-	// //dat.push_front(8);
-	// dat.push_back(str2);
-	// dat.push_front(str3);
-	// dat.push_back(str1);
-	// dat.push_back(str2);
-	// dat.push_back(str1);
-	// dat.push_back(str2);
-	// dat.push_back(str1);
-	// dat.push_back(str2);	
-	// dat.push_back(str1);
-	// dat.push_back(str2);
-	// dat.push_back(str1);
-	// dat.push_back(str1);
-	// dat.push_back(str1);
-	// dat.push_front(str3);
-
-
-	//dat.push_back(str3);
-	//cout << dat.get(0) << " " << dat.get(1) << " " << dat.get(2) << endl;
-	//cout << dat.get(0) << " " << dat.get(1) << endl;
-
-	// prints: 8 7 9
-	// cout << dat.size() << end;  // prints 3 since there are 3 strings stored
+	dat.clear();
 
   return 0;
 }
